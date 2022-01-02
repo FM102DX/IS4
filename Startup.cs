@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Events;
+using System;
 
 namespace FerryData.IS4
 {
@@ -26,19 +27,19 @@ namespace FerryData.IS4
         public void ConfigureServices(IServiceCollection services)
         {
             #region Logger
-            /*
+            
             Log.Logger = new LoggerConfiguration()
                                     .MinimumLevel.Override("Microsoft", LogEventLevel.Debug)
                                     .Enrich.FromLogContext()
-                                    .WriteTo.File("BarsikLogs0.txt")
+                                    .WriteTo.File("BarsikLogs2.txt")
                                     .CreateLogger();
 
             Log.Logger.Information("Point 1");
 
-            */
-            //+7 952 243 76 86
-            services.AddSingleton(typeof(LogsManager), (x) => new LogsManager());
+            
 
+            services.AddSingleton(typeof(LogsManager), (x) => new LogsManager());
+            Log.Logger.Information("Point 2");
             services.AddTransient(typeof(Serilog.ILogger), (x) => new LoggerConfiguration()
                                     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                                     .Enrich.FromLogContext()
@@ -47,21 +48,17 @@ namespace FerryData.IS4
 
             #endregion
 
-            services.AddDbContext<IsDbContext>(options =>
-            {
-                options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
-            });
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+
+           services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
-                options.Password.RequiredLength = 6;
+                options.Password.RequiredLength = 5;
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
                 .AddEntityFrameworkStores<IsDbContext>()
                 .AddDefaultTokenProviders();
-
 
             services.AddIdentityServer(options =>
             {
@@ -78,6 +75,15 @@ namespace FerryData.IS4
             services.AddCors();
 
             services.AddControllersWithViews();
+
+            #region DB
+
+            services.AddDbContext<IsDbContext>(options =>
+            {
+                options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
+            });
+
+            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

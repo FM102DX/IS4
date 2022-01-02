@@ -1,0 +1,1 @@
+2022-01-02 12:25:33.157 +03:00 [INF] DbInitializer is here

@@ -12,23 +12,23 @@ namespace FerryData.IS4
         {
             var host = CreateHostBuilder(args).Build();
 
-            CreateDbIfNotExists(host);
+            ConfigureDb(host);
 
             host.Run();
         }
 
-        private static void CreateDbIfNotExists(IHost host)
+        private static void ConfigureDb(IHost host)
         {
             using var scope = host.Services.CreateScope();
 
+            var logger = scope.ServiceProvider.GetRequiredService<Serilog.ILogger>();
             try
             {
-                DbInitializer.Initialize(scope);
+                DbInitializer.Initialize(scope, logger);
             }
             catch (Exception ex)
             {
-                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occurred creating the DB.");
+                logger.Error($"An error occurred creating the DB: {ex.Message}");
             }
         }
 

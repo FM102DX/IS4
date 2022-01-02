@@ -25,25 +25,25 @@ namespace FerryData.IS4.Infrastructure
                     IdentityServerConstants.StandardScopes.Email,
                     IdentityServerConstants.StandardScopes.Profile
                 },
+               
 
                 /*
                  * 
                  * RedirectUris = { "https://localhost:44326/authentication/login-callback" },
                  PostLogoutRedirectUris = { "https://localhost:44326/authentication/logout-callback" },
+               
                 */
 
                 RedirectUris = {
-                    "https://t104admin/authentication/login-callback",
-                    "https://t104shop/authentication/login-callback",
+                    "https://t104admin.ricompany.info/authentication/login-callback",
+                    "https://t104shop.ricompany.info/authentication/login-callback",
                     "https://localhost:44326/authentication/login-callback"
                 },
                 PostLogoutRedirectUris = {
-                    "https://t104admin/authentication/logout-callback",
-                    "https://t104shop/authentication/logout-callback",
+                    "https://t104admin.ricompany.info/authentication/logout-callback",
+                    "https://t104shop.ricompany.info/authentication/logout-callback",
                     "https://localhost:44326/authentication/logout-callback"
                 }
-                 
-
             };
         }
 
